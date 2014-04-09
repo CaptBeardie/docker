@@ -1,0 +1,22 @@
+# This is a Dockerfile.
+
+FROM centos
+
+MAINTAINER Rocco Muscaritolo RMuscaritolo@gmail.com
+
+# Install EPEL repo
+RUN rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+
+# Update all the things
+RUN yum update -y
+
+# Install Apache\PHP
+RUN yum install @"Web Server" @"PHP Support" -y
+RUN chkconfig httpd on
+
+# Start the Apache service
+ENTRYPOINT ["service", "httpd", "start"]
+
+# Open the port forward
+EXPOSE 80
+EXPOSE 443
